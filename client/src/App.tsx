@@ -23,9 +23,28 @@ function App() {
     if (sessionStorage.getItem("devUnlocked") === "true") {
       return false;
     }
-    // Create target date: Jan 31, 2026 at 00:00:00 UK time (GMT/UTC)
+
+    // Allow overriding "now" for local testing via:
+    // - query param: ?now=2026-01-31T00:37:00+05:45
+    // - Vite env var: VITE_TEST_NOW (ISO string)
+    const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    let now: Date | null = null;
+
+    if (params && params.get("now")) {
+      const v = params.get("now")!;
+      const parsed = new Date(v);
+      if (!isNaN(parsed.getTime())) now = parsed;
+    }
+
+    if (!now && import.meta.env.VITE_TEST_NOW) {
+      const parsed = new Date(import.meta.env.VITE_TEST_NOW as string);
+      if (!isNaN(parsed.getTime())) now = parsed;
+    }
+
+    if (!now) now = new Date();
+
+    // Create target date: Jan 31, 2026 at 00:00:00 UTC
     const target = new Date("2026-01-31T00:00:00Z"); // UTC midnight
-    const now = new Date();
     return now.getTime() < target.getTime();
   };
 
