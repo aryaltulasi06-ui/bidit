@@ -66,7 +66,7 @@ export function Countdown({ onTimeUp }: CountdownProps) {
   }, [onTimeUp]);
 
   const handleDevPassword = () => {
-    if (devPassword === "12345") {
+    if (devPassword === "iloveyousana") {
       setDevUnlocked(true);
       sessionStorage.setItem("devUnlocked", "true");
       setPasswordError(false);
