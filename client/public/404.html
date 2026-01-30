@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirect</title>
+    <script type="text/javascript">
+      // Get the path the user was trying to access
+      var pathSegmentsToKeep = 1; // Keep '/bidit/'
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/bidit/?p=' + l.pathname.slice(1).split('/').slice(0, pathSegmentsToKeep).join('/') +
+        '&q=' + l.search.slice(1)
+      );
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
